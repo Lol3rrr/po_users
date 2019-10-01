@@ -9,6 +9,8 @@ import (
 func StartAPI(port string) {
   r := mux.NewRouter()
   r.HandleFunc("/create", createHandler).Methods("POST")
+  r.HandleFunc("/projects/add", addProjectHandler).Methods("POST")
+  r.HandleFunc("/projects/delete", deleteProjectHandler).Methods("POST")
 
   r.HandleFunc("/find", findHandler).Methods("GET")
   http.Handle("/", r)
