@@ -9,7 +9,7 @@ import (
 )
 
 type FindResponse struct {
-  Results []general.User `json:"results"`
+  User general.ResponseUser `json:"user"`
 }
 
 func sendResult(resp FindResponse, w http.ResponseWriter) {
@@ -31,11 +31,8 @@ func findWithSessionID(id string, w http.ResponseWriter) {
     return
   }
 
-  results := make([]general.User, 1)
-  results[0] = res
-
   response := FindResponse{
-    Results: results,
+    User: res.ConvertToResponse(),
   }
 
   sendResult(response, w)
