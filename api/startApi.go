@@ -12,7 +12,7 @@ func StartAPI(port string) {
   r.HandleFunc("/projects/add", addProjectHandler).Methods("POST")
   r.HandleFunc("/projects/delete", deleteProjectHandler).Methods("POST")
 
-  r.HandleFunc("/find", findHandler).Methods("GET")
+  r.HandleFunc("/load", loadHandler).Methods("GET")
   http.Handle("/", r)
 
   http.ListenAndServe(port, nil)
