@@ -6,8 +6,10 @@ type Project struct {
 }
 
 type User struct {
-  ID        string
-  SessionID string
-  Name      string
-  Projects  []Project
+  ID        string `json:"id"`
+  SessionID string `json:"sessionid"`
+  Name      string `json:"name"`
+  Projects  []Project `json:"projects"`
+
+  GoogleID  string `json:"googleid"`
 }
