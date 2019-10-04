@@ -8,29 +8,27 @@ import (
 )
 
 func addProjectHandler(w http.ResponseWriter, r *http.Request) {
-  query := r.URL.Query()
+  query := getQuery(r)
 
-  rawSessionID, sesssionID_ok := query["sessionID"]
-  rawID, id_ok := query["project_id"]
-  rawName, name_ok := query["project_name"]
-  if !sesssionID_ok || len(rawSessionID) <= 0 {
-    w.WriteHeader(400)
-    return
-  }
-  if !id_ok || len(rawID) <= 0 {
-    w.WriteHeader(400)
-    return
-  }
-  if !name_ok || len(rawName) <= 0 {
+  sessionID, found := getQueryElement(query, "sessionID")
+  if !found {
     w.WriteHeader(400)
     return
   }
 
-  sessionID := rawSessionID[0]
-  id := rawID[0]
-  name := rawName[0]
+  id, found := getQueryElement(query, "project_id")
+  if !found {
+    w.WriteHeader(400)
+    return
+  }
 
-  user, err := database.FindUser_sessionID(sessionID)
+  name, found := getQueryElement(query, "project_name")
+  if !found {
+    w.WriteHeader(400)
+    return
+  }
+
+  user, err := database.LoadUser_sessionID(sessionID)
   if err != nil {
     w.WriteHeader(400)
     return

@@ -14,26 +14,16 @@ type CreateResponse struct {
   SessionID string `json:"sessionID"`
 }
 
-func getGoogleID(query map[string][]string) (string) {
-  rawID, ok := query["id_google"]
-  if !ok || len(rawID) <= 0 {
-    return ""
-  }
-
-  return rawID[0]
-}
-
 func createHandler(w http.ResponseWriter, r *http.Request) {
-  query := r.URL.Query()
+  query := getQuery(r)
 
-  rawName, name_ok := query["name"]
-  if !name_ok || len(rawName) <= 0 {
+  name, found := getQueryElement(query, "name")
+  if !found {
     w.WriteHeader(400)
     return
   }
+  googleId, _ := getQueryElement(query, "id_google")
 
-  googleId := getGoogleID(query)
-  name := rawName[0]
   id := guuid.New().String()
   sessionID := guuid.New().String()
 

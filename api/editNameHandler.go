@@ -6,7 +6,7 @@ import (
   "po_users/database"
 )
 
-func deleteProjectHandler(w http.ResponseWriter, r *http.Request) {
+func editNameHandler(w http.ResponseWriter, r *http.Request) {
   query := getQuery(r)
 
   sessionID, found := getQueryElement(query, "sessionID")
@@ -15,8 +15,8 @@ func deleteProjectHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  id, found := getQueryElement(query, "project_id")
-  if !found {
+  nName, found := getQueryElement(query, "name")
+  if !found || nName == "" {
     w.WriteHeader(400)
     return
   }
@@ -27,20 +27,7 @@ func deleteProjectHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  index := -1
-  for i, val := range user.Projects {
-    if val.ID == id {
-      index = i
-      break
-    }
-  }
-
-  if index == -1 {
-    w.WriteHeader(400)
-    return
-  }
-
-  user.Projects = append(user.Projects[:index], user.Projects[index+1:]...)
+  user.Name = nName
 
   database.UpdateUser(user)
 
