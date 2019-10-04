@@ -39,14 +39,13 @@ func findWithSessionID(id string, w http.ResponseWriter) {
 }
 
 func loadHandler(w http.ResponseWriter, r *http.Request) {
-  query := r.URL.Query()
+  query := getQuery(r)
 
-  sessionID, sessionID_ok := query["sessionID"]
-  if sessionID_ok && len(sessionID) > 0 {
-    findWithSessionID(sessionID[0], w)
+  sessionID, found := getQueryElement(query, "sessionID")
+  if !found {
+    w.WriteHeader(400)
     return
   }
 
-
-  w.WriteHeader(200)
+  findWithSessionID(sessionID, w)
 }

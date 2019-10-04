@@ -7,7 +7,7 @@ import (
 )
 
 func editNameHandler(w http.ResponseWriter, r *http.Request) {
-  query := getQuery(r)
+  //query := getQuery(r)
 
   w.WriteHeader(200)
 }
