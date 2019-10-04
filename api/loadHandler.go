@@ -25,7 +25,7 @@ func sendResult(resp FindResponse, w http.ResponseWriter) {
 }
 
 func findWithSessionID(id string, w http.ResponseWriter) {
-  res, err := database.FindUser_sessionID(id)
+  res, err := database.LoadUser_sessionID(id)
   if err != nil {
     w.WriteHeader(400)
     return

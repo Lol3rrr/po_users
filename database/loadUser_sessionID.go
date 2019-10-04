@@ -8,7 +8,7 @@ import (
   "po_users/general"
 )
 
-func FindUser_sessionID(sessionID string) (general.User, error) {
+func LoadUser_sessionID(sessionID string) (general.User, error) {
   collection := client.Database(dataBaseName).Collection(collectionName)
   var result general.User
 

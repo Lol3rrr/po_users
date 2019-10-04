@@ -21,7 +21,7 @@ func deleteProjectHandler(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  user, err := database.FindUser_sessionID(sessionID)
+  user, err := database.LoadUser_sessionID(sessionID)
   if err != nil {
     w.WriteHeader(400)
     return
